@@ -1,11 +1,5 @@
 # Automatic-Hardening-of-K8S-Cluster-with-CIS-Benchmarks
 
-A Project Report on
-
-## Automatic Hardening of Kubernetes
-
-# Environment with CIS Benchmarks
-
 ## Securenetes
 
 ## CONTENTS
