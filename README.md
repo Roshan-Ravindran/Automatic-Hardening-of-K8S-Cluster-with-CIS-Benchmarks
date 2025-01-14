@@ -1,37 +1,28 @@
-# Automatic-Hardening-of-K8S-Cluster-with-CIS-Benchmarks
-
-A Project Report on
-
-## Automatic Hardening of Kubernetes
-
-# Environment with CIS Benchmarks
-
 ## Securenetes
 
-## CONTENTS
+## Table of Contents
 
-- 1. ABSTRACT
-- 2. INTRODUCTION
-- 3. CIS KUBERNETES BENCHMARKS
-- 4. NEED FOR KUBERNETES SECURITY
-- 5. KUBERNETES COMPONENTS
-  - 5.1 Master Node
-  - 5.2 Worker Node
-  - 5.3 Pod
-  - 5.4 Service
-  - 5.5 Volume
-- 6. RELATED WORK
-- 7. PROPOSED SOLUTION
-  - 7.1 Overview
-  - 7.2 Details
-  - 7.3 Analysis
-  - 7.4 Limitations
-- 8. ARCHITECTURE
-- 9. ENVIRONMENT SETUP
-- 10. REMEDIATED CONTROLS
-- 11. OUTPUT
-- 12. CONCLUSION
-- 13. FUTURE SCOPE
+- [ABSTRACT](#1-abstract)
+- [INTRODUCTION](#2-introduction)
+- [CIS KUBERNETES BENCHMARKS](#3-cis-kubernetes-benchmarks)
+- [NEED FOR KUBERNETES SECURITY](#4-need-for-kubernetes-security)
+- [KUBERNETES COMPONENTS](#5-kubernetes-components)
+  - [Master Node](#51-master-node)
+  - [Worker Node](#52-worker-node)
+  - [Pod](#53-pod)
+  - [Service](#54-service)
+  - [Volume](#55-volume)
+- [PROPOSED SOLUTION](#7-proposed-solution)
+  - [Overview](#71-overview)
+  - [Details](#72-details)
+  - [Analysis](#73-analysis)
+  - [Limitations](#74-limitations)
+- [ARCHITECTURE](#8-architecture)
+- [ENVIRONMENT SETUP](#9-environment-setup)
+- [REMEDIATED CONTROLS](#10-remediated-controls)
+- [OUTPUT](#11-output)
+- [CONCLUSION](#12-conclusion)
+- [FUTURE SCOPE](#13-future-scope)
 
 ## 1. ABSTRACT
 
@@ -166,24 +157,6 @@ and mounted into containers, allowing data to be shared and persisted across res
 Kubernetes supports various types of volumes, including local storage, network-attached storage, and
 cloud provider-specific storage options.
 
-## 6. RELATED WORK
-
-In the realm of automatic remediation of CIS Benchmark controls on Kubernetes clusters, two notable
-tools that aid in this process are Kube-Bench and Kube-Sec. Kube-Bench is an open-source tool
-developed by the Center for Internet Security (CIS) that enables organizations to assess the security of
-their Kubernetes clusters against the CIS benchmarks. It scans the cluster's components, including the
-master nodes and worker nodes, and provides detailed reports highlighting areas where the cluster's
-configuration does not meet the recommended security controls. On the other hand, Kube-Sec focuses
-on broader approach to security, including CIS compliance but also encompassing risk analysis, RBAC
-
-visualization, and image vulnerability scanning. It offers a "single pane of glass" view for Kubernetes
-security. Several existing projects contribute to Kubernetes security, but none directly address automatic
-remediation of CIS benchmarks. Kube-bench audits configurations against CIS benchmarks, offering
-compliance checks but no remediation. Kubescape provides broader security analysis including
-vulnerabilities and CIS checks, but remediation remains manual. This project fills the gap by combining
-CIS compliance focus from Kube-bench with Kubescape's comprehensive analysis, enabling automatic
-remediation for a continuously secured Kubernetes environment.
-
 ## 7. PROPOSED SOLUTION
 
 ### 7.1 Overview
@@ -257,79 +230,62 @@ to guarantee full operation.
 
 ## 9. ENVIRONMENT SETUP
 
-```
 i) Install the pre-requisites:
-```
 
 - Kubectl – to interact with Kubernetes cluster from CLI.
 - Kops - simplifies tasks related to cluster creation, configuration, and maintenance.
 
-```
 ii) Make sure to have the private key of nodes in particular directory so the tool can access them
 while using paramiko client to SSH.
-```
 
-```
 iii) Configure the CLI to assume the role with permissions to access the nodes if they were hosted
 on cloud and assure that the state holder storages are accessible when buckets are used as
 etcd storage.
-```
 
-```
 iv) Validate the cluster from CLI to make sure that the cluster is ready and accessible.
-```
 
 ## 10. REMEDIATED CONTROLS
 
 Below are the controls that can be remediated automatically on master node and the exact remediated
 function is included in the source code.
 
-```
 Benchmark Controls Remediation Commands
-```
 
-```
 1.1.1 Ensure that the API server pod specification
 file permissions are set to 600 or more restrictive.
-```
 
 ```
 sudo chmod 600 /etc/kubernetes/manifests/kube-
 apiserver.manifest
 ```
 
-```
 1.1.2 Ensure that the API server pod specification
 file ownership is set to root:root.
-```
 
 ```
 sudo chown root:root
 /etc/kubernetes/manifests/kube-apiserver.manifest
 ```
 
-```
 1.1.2 Ensure that the API server pod specification
 file ownership is set to root:root.
-```
 
 ```
 sudo chmod 600 /etc/kubernetes/manifests/kube-
 controller-manager.manifest
 ```
 
-```
 1.1.4 Ensure that the controller manager pod
 specification file ownership is set to root:root.
-```
 
 ```
 sudo chown root:root
 /etc/kubernetes/manifests/kube-controller-
 manager.manifest
+```
+
 1.1.5 Ensure that the scheduler pod specification file
 permissions are set to 600 or more restrictive.
-```
 
 ```
 sudo chmod 600 /etc/kubernetes/manifests/kube-
@@ -371,11 +327,14 @@ Add --kubelet-https=true in in
 --kubelet-client-key arguments are set as
 appropriate.
 
+```
 Add kubelet-client-
 certificate=/srv/kubernetes/kube-apiserver/kubelet-
 api.crt && kubelet-client-
 key=/srv/kubernetes/kube-apiserver/kubelet-
 api.key
+```
+
 1.2.6 Ensure that the --kubelet-certificate-authority
 argument is set as appropriate.
 
@@ -490,6 +449,7 @@ Add --service-account-lookup=true
 1.2.25 Ensure that the --service-account-key-file
 argument is set as appropriate.
 
+```
 Add --service-account-key-
 file=/srv/kubernetes/kube-apiserver/service-
 account.pub
@@ -509,59 +469,83 @@ file=/srv/kubernetes/kube-apiserver/server.key
 1.2.28 Ensure that the --client-ca-file argument is set
 as appropriate.
 
-```
+
 Add --client-ca-file=/srv/kubernetes/ca.crt
 ```
 
 1.2.29 Ensure that the --etcd-cafile argument is set
 as appropriate.
 
+```
 Add --etcd-cafile=/srv/kubernetes/kube-
 apiserver/etcd-ca.crt
+```
+
 1.3.2 Ensure that the --profiling argument is set to
 false.
 
+```
 Set --profiling=false in
 /etc/kubernetes/manifests/kube-controller-
 manager.manifest
+```
+
 1.3.3 Ensure that the --use-service-account-
 credentials argument is set to true.
 
+```
 Set --use-service-account-credentials=true in
 /etc/kubernetes/manifests/kube-controller-
 manager.manifest
+```
+
 1.3.4 Ensure that the --service-account-private-key-
 file argument is set as appropriate.
 
+```
 Set --service-account-private-key-
 file=/srv/kubernetes/kube-controller-
 manager/service-account.key in
 /etc/kubernetes/manifests/kube-controller-
 manager.manifest
+```
+
 1.3.5 Ensure that the --root-ca-file argument is set
 as appropriate.
 
+```
 Set --root-ca-file=/srv/kubernetes/ca.crt in
 /etc/kubernetes/manifests/kube-controller-
 manager.manifest
+```
+
 1.3.6 Ensure that the RotateKubeletServerCertificate
 argument is set to true.
 
+```
 Set --feature-
 gates=RotateKubeletServerCertificate=true in
 /etc/kubernetes/manifests/kube-controller-
 manager.manifest
+```
+
 1.3.7 Ensure that the --bind-address argument is set
 to 127.0.0.1.
 
+```
 Set --bind-address=127.0.0.1 in
 /etc/kubernetes/manifests/kube-controller-
 manager.manifest
+```
+
 1.4.1 Ensure that the --profiling argument is set to
 false.
 
+```
 Set --profiling=false in
 /etc/kubernetes/manifests/kube-scheduler.manifest
+```
+
 1.4.2 Ensure that the --bind-address argument is set
 to 127.0.0.1.
 
@@ -573,111 +557,96 @@ Set --bind-address=127.0.0.1 in
 Below are the controls that can be remediated automatically on worker nodes and the exact remediated
 function is included in the source code.
 
-```
 Benchmark Controls Remediation Commands
-```
 
-```
 4.1.1 Ensure that the kubelet service file permissions
 are set to 600 or more restrictive.
-```
 
 ```
 sudo chmod 600
 /lib/systemd/system/kubelet.service
 ```
 
-```
 4.1.2 Ensure that the kubelet service file ownership
 is set to root:root.
-```
 
 ```
 sudo chown root:root
 /lib/systemd/system/kubelet.service
+```
+
 4.1.5 Ensure that the --kubeconfig kubelet.conf
 file permissions are set to 600 or more restrictive.
-```
 
 ```
 sudo chmod 600 /var/lib/kubelet/kubelet.conf
 ```
 
-```
 4.1.6 Ensure that the --kubeconfig kubelet.conf
 file ownership is set to root:root.
-```
 
 ```
 sudo chown root:root
 /var/lib/kubelet/kubelet.conf
+```
+
 4.1.9 If the kubelet config.yaml configuration file is
 being used validate permissions set to 600 or more
 restrictive.
-```
 
 ```
 sudo chmod 600 /var/lib/kubelet/kubeconfig
 ```
 
-```
 4.1.10 If the kubelet config.yaml configuration file is
-being used validate file ownership is set to root:root
-.
-```
+being used validate file ownership is set to root:root.
 
 ```
 sudo chown root:root /var/lib/kubelet/kubeconfig
 ```
 
-```
 4.2.1 Ensure that the --anonymous-auth argument is
 set to false.
-```
 
 ```
 Add --anonymous-auth=false in
 /lib/systemd/system/kubelet.service
 ```
 
-```
 4.2.2 Ensure that the --authorization-mode
 argument is not set to Always Allow.
-```
 
 ```
 Add --authorization-mode=Webhook in
 /lib/systemd/system/kubelet.service
 ```
 
-```
 4.2.3 Ensure that the --client-ca-file argument is set
 as appropriate.
-```
 
 ```
 Add --client-ca-file=/srv/kubernetes/ca.crt in
 /lib/systemd/system/kubelet.service
 ```
 
-```
 4.2.6 Ensure that the --protect-kernel-defaults
 argument is set to true.
-```
 
 ```
 Add --protect-kernel-defaults=true in
 /lib/systemd/system/kubelet.service
+```
+
 4.2.7 Ensure that the --make-iptables-util-chains
 argument is set to true.
-```
 
 ```
 Add --make-iptables-util-chains=true in
 /lib/systemd/system/kubelet.service
+```
+
 4.2.11 Ensure that the --rotate-certificates argument
 is not set to false.
-```
 
 ```
 Remove --rotate-certificates=false in
@@ -747,7 +716,7 @@ With this solution, organizations can confidently administer their Kubernetes cl
 compliance, and mitigate potential risks posed by cyber threats, thereby ensuring a secure and resilient
 operation within their cloud-native ecosystems.
 
-## 13. FUTURE SCOPE
+#### Contributions Welcome
 
 - Manual Controls: Develop a mechanism to handle security controls that cannot be
   automatically remediated. Implement a risk assessment module that categorizes controls based
@@ -765,9 +734,9 @@ operation within their cloud-native ecosystems.
   configure the tool's settings. This would make the tool more accessible to a wider range of
   users, even those who are not familiar with the command line.
 
-```
+#### Acknowledgements
+
 Contributors
-Danush Adhitya Muthuvel
-Prasanna Venkatesan Aravindan
-Roshan Ravindran
-```
+
+- [Danush Adhitya Muthuvel](https://github.com/danushadhitya)
+- [Prasanna Venkatesan Aravindan](https://github.com/prasanna7401)
