@@ -4,29 +4,30 @@
 
 ## Table of Contents
 
-- [ABSTRACT](#1-abstract)
-- [INTRODUCTION](#2-introduction)
-- [CIS KUBERNETES BENCHMARKS](#3-cis-kubernetes-benchmarks)
-- [NEED FOR KUBERNETES SECURITY](#4-need-for-kubernetes-security)
-- [KUBERNETES COMPONENTS](#5-kubernetes-components)
-  - [Master Node](#51-master-node)
-  - [Worker Node](#52-worker-node)
-  - [Pod](#53-pod)
-  - [Service](#54-service)
-  - [Volume](#55-volume)
-- [PROPOSED SOLUTION](#7-proposed-solution)
-  - [Overview](#71-overview)
-  - [Details](#72-details)
-  - [Analysis](#73-analysis)
-  - [Limitations](#74-limitations)
-- [ARCHITECTURE](#8-architecture)
-- [ENVIRONMENT SETUP](#9-environment-setup)
-- [REMEDIATED CONTROLS](#10-remediated-controls)
-- [OUTPUT](#11-output)
-- [CONCLUSION](#12-conclusion)
-- [FUTURE SCOPE](#13-future-scope)
+- [ABSTRACT](#abstract)
+- [INTRODUCTION](#introduction)
+- [CIS KUBERNETES BENCHMARKS](#cis-kubernetes-benchmarks)
+- [NEED FOR KUBERNETES SECURITY](#need-for-kubernetes-security)
+- [KUBERNETES COMPONENTS](#kubernetes-components)
+  - [Master Node](#master-node)
+  - [Worker Node](#worker-node)
+  - [Pod](#pod)
+  - [Service](#service)
+  - [Volume](#volume)
+- [PROPOSED SOLUTION](#proposed-solution)
+  - [Overview](#overview)
+  - [Details](#details)
+  - [Analysis](#analysis)
+  - [Limitations](#limitations)
+- [ARCHITECTURE](#architecture)
+- [ENVIRONMENT SETUP](#environment-setup)
+- [REMEDIATED CONTROLS](#remediated-controls)
+- [OUTPUT](#output)
+- [EXAMPLES](#example-of-control-1219-before-remediation)
+- [CONCLUSION](#conclusion)
+- [ACKNOWLEDGEMENT](#acknowledgements)
 
-## 1. ABSTRACT
+## ABSTRACT
 
 Automatic hardening of a Kubernetes environment with CIS benchmarks is a crucial aspect of securing
 containerized applications in today's complex IT landscape. CIS (Center for Internet Security)
@@ -45,7 +46,7 @@ Kubernetes environment. By embracing this automated approach, organizations can 
 strengthen the security posture of their Kubernetes deployments and enhance the overall resilience of
 their containerized applications.
 
-## 2. INTRODUCTION
+## INTRODUCTION
 
 In the rapidly evolving landscape of cloud computing, Kubernetes has emerged as the de facto
 orchestration platform for managing containerized applications. However, with its widespread
@@ -60,7 +61,7 @@ The goal of this project is to automate the hardening process to provide a solut
 Kubernetes security easier, guarantees uniform application of security standards, and strengthens
 clusters against the constant threat of cyberattacks.
 
-## 3. CIS KUBERNETES BENCHMARKS
+## CIS KUBERNETES BENCHMARKS
 
 The CIS Kubernetes benchmarks, developed by the Center for Internet Security (CIS), are a
 comprehensive resource for securing your Kubernetes environments. They go beyond basic security
@@ -91,7 +92,7 @@ Following the CIS Kubernetes benchmarks can significantly improve the security p
 Kubernetes deployments. They provide a structured approach to securing your clusters and reducing
 the risk of attacks.
 
-## 4. NEED FOR KUBERNETES SECURITY
+## NEED FOR KUBERNETES SECURITY
 
 As organizations adopt Kubernetes for container orchestration, ensuring robust security measures
 becomes imperative. The need for Kubernetes security arises from several factors, including:
@@ -113,9 +114,9 @@ By implementing CIS Benchmarks, organizations can address these security challen
 strong security foundation for their Kubernetes clusters. Compliance with the benchmarks helps
 mitigate risks, reduce vulnerabilities, and align deployments with industry-recognized best practices.
 
-## 5. KUBERNETES COMPONENTS
+## KUBERNETES COMPONENTS
 
-### 5.1 Master Node
+### Master Node
 
 The master node serves as the control plane for the Kubernetes cluster. It consists of several key
 components. The API Server acts as the central communication hub, receiving and processing requests
@@ -126,7 +127,7 @@ various controllers responsible for maintaining the desired state of the cluster
 management, replication, and resource allocation. The Scheduler is responsible for assigning pods to
 nodes based on resource requirements, policies, and constraints.
 
-### 5.2 Worker Node
+### Worker Node
 
 The worker node, also known as a minion, is where the actual workloads in the form of containers are
 executed. Each worker node runs several components. The Kubelet is an agent that communicates with
@@ -135,7 +136,7 @@ Container runtime, such as Docker or containerd, is responsible for pulling cont
 running them as containers. The Kube-proxy is a network proxy that enables communication between
 services and manages network routing on the node.
 
-### 5.3 Pod
+### Pod
 
 A pod is the smallest deployable unit in Kubernetes. It represents a single instance of a running process
 in the cluster. Pods encapsulate one or more containers, shared storage, and network resources. They
@@ -143,7 +144,7 @@ are co-located and co-scheduled on the same worker node, enabling them to commun
 other through localhost. Pods are considered disposable and can be easily scaled, replaced, or
 rescheduled based on the cluster's needs.
 
-### 5.4 Service
+### Service
 
 Services provide a stable network endpoint to expose a group of pods. They enable load balancing and
 service discovery within the cluster. A service abstracts the underlying pods and allows other
@@ -151,7 +152,7 @@ components to access them using a consistent DNS name or IP address. By defining
 developers can decouple the application logic from the specifics of the underlying pod instances,
 making the application more resilient and scalable.
 
-### 5.5 Volume
+### Volume
 
 Volumes enable persistent storage in Kubernetes. They provide a way for containers within pods to
 store and access data beyond the lifespan of the containers themselves. Volumes can be attached to pods
@@ -159,15 +160,15 @@ and mounted into containers, allowing data to be shared and persisted across res
 Kubernetes supports various types of volumes, including local storage, network-attached storage, and
 cloud provider-specific storage options.
 
-## 7. PROPOSED SOLUTION
+## PROPOSED SOLUTION
 
-### 7.1 Overview
+### Overview
 
 This project is about the tool created which is named as Securenetes that audits the Kubernetes Cluster
 for CIS Benchmarks. From the audit analysis, the tool will perform remediation on both master and
 worker nodes that can be automatically performed.
 
-### 7.2 Details
+### Details
 
 Initially, kube-bench is iteratively installed on all the nodes. The tool ingests security audit reports
 generated by Kube-bench within the cluster. These reports act as a roadmap, highlighting areas where
@@ -208,7 +209,7 @@ the cluster operator.
 - --exempt argument takes input of controls ID’s that needs to be excluded from automatic
   remediation.
 
-### 7.3 Analysis
+### Analysis
 
 One of the many benefits of the suggested technology is that it automates the enforcement of CIS
 benchmarks. Ensuring uniform compliance across clusters and reducing the likelihood of human
@@ -219,7 +220,7 @@ tool's scalability allows it to efficiently manage big clusters with hundreds or
 nodes. Because of this, it's a solution that will stand the test of time for businesses operating more
 complex containerized systems.
 
-### 7.4 Limitations
+### Limitations
 
 The first development phase will give priority to fixing security flaws found in CIS benchmark failures.
 This guarantees a solid base for cluster security. Everyone recognize that in order to address a broader
@@ -228,9 +229,11 @@ similar vein, isolated Kubernetes clusters will be used for the initial testing.
 beginning point, additional testing on more intricate Kubernetes systems would be necessary later on
 to guarantee full operation.
 
-## 8. ARCHITECTURE
+## ARCHITECTURE
 
-## 9. ENVIRONMENT SETUP
+![image1](./images/image1.png)
+
+## ENVIRONMENT SETUP
 
 i) Install the pre-requisites:
 
@@ -246,7 +249,9 @@ etcd storage.
 
 iv) Validate the cluster from CLI to make sure that the cluster is ready and accessible.
 
-## 10. REMEDIATED CONTROLS
+![image2](./images/image2.png)
+
+## REMEDIATED CONTROLS
 
 Below are the controls that can be remediated automatically on master node and the exact remediated
 function is included in the source code.
@@ -660,13 +665,15 @@ those controls to be implemented. Manual controls involve assessing security pos
 beyond readily available configuration data and involve security policy decisions best left to human
 judgment.
 
-## 11. OUTPUT
+## OUTPUT
 
 Username and location of private key to access the node are given as the input:
+![image3](./images/image3.png)
 
 Failed Benchmarks for Worker Node:
+![image4](./images/image4.png)
 
-Example of Control 4.2.7 before remediation:
+### Example of Control 4.2.7 before remediation:
 
 The CIS Kubernetes Benchmark recommendation 4.2.7 focuses on the --make-iptables-util-chains
 argument for the Kubelet configuration. To comply with this benchmark, ensure that the
@@ -675,16 +682,20 @@ Kubelet to create and manage iptables utility chains, which are necessary for ne
 management and security within a Kubernetes cluster.
 
 Output of /lib/system/system/kubelet.service file
+![image5](./images/image5.png)
 
 After remediation:
+![image6](./images/image6.png)
 
 Output of /lib/system/system/kubelet.service file
+![image7](./images/image7.png)
 
 Now, --make-iptables-util-chains argument is set to true in kubelet service file.
 
 Failed Benchmarks for Master Node:
+![image8](./images/image8.png)
 
-Example of Control 1.2.19 before remediation:
+### Example of Control 1.2.19 before remediation:
 
 The CIS Kubernetes Benchmark recommendation to “ensure that the audit log path argument is set”
 refers to a security measure for Kubernetes clusters. Specifically, it involves setting the --audit-log-path
@@ -692,15 +703,17 @@ argument in the API server pod specification file, typically found at /etc/kuber
 apiserver.yaml on the Control Plane node.
 
 Output of API Server Pod Specification File:
+![image9](./images/image9.png)
 
 After Remediation:
+![image10](./images/image10.png)
 
 Output of API Server Pod Specification File:
+![image11](./images/image11.png)
 
-Now, the argument audit log path is set to a particular location where the audit logs of API Server are
-stored.
+Now, the argument audit log path is set to a particular location where the audit logs of API Server are stored.
 
-## 12. CONCLUSION
+## CONCLUSION
 
 By integrating the straightforward and adaptable solution within their Kubernetes environments,
 organizations can effectively fortify their clusters by implementing the recommended controls from the
@@ -718,7 +731,7 @@ With this solution, organizations can confidently administer their Kubernetes cl
 compliance, and mitigate potential risks posed by cyber threats, thereby ensuring a secure and resilient
 operation within their cloud-native ecosystems.
 
-#### Contributions Welcome
+## Contributions Welcome
 
 - Manual Controls: Develop a mechanism to handle security controls that cannot be
   automatically remediated. Implement a risk assessment module that categorizes controls based
@@ -736,7 +749,7 @@ operation within their cloud-native ecosystems.
   configure the tool's settings. This would make the tool more accessible to a wider range of
   users, even those who are not familiar with the command line.
 
-#### Acknowledgements
+## Acknowledgements
 
 Contributors
 
