@@ -681,18 +681,22 @@ makeIPTablesUtilChains field is set to true in the Kubelet configuration file. T
 Kubelet to create and manage iptables utility chains, which are necessary for network traffic
 management and security within a Kubernetes cluster.
 
-Output of /lib/system/system/kubelet.service file
+### Output of /lib/system/system/kubelet.service file
+
 ![image5](./images/image5.png)
 
-After remediation:
+### After remediation:
+
 ![image6](./images/image6.png)
 
-Output of /lib/system/system/kubelet.service file
+### Output of /lib/system/system/kubelet.service file
+
 ![image7](./images/image7.png)
 
 Now, --make-iptables-util-chains argument is set to true in kubelet service file.
 
-Failed Benchmarks for Master Node:
+### Failed Benchmarks for Master Node:
+
 ![image8](./images/image8.png)
 
 ### Example of Control 1.2.19 before remediation:
@@ -702,13 +706,16 @@ refers to a security measure for Kubernetes clusters. Specifically, it involves 
 argument in the API server pod specification file, typically found at /etc/kubernetes/manifests/kube-
 apiserver.yaml on the Control Plane node.
 
-Output of API Server Pod Specification File:
+### Output of API Server Pod Specification File:
+
 ![image9](./images/image9.png)
 
-After Remediation:
+### fter Remediation:
+
 ![image10](./images/image10.png)
 
-Output of API Server Pod Specification File:
+### Output of API Server Pod Specification File:
+
 ![image11](./images/image11.png)
 
 Now, the argument audit log path is set to a particular location where the audit logs of API Server are stored.
