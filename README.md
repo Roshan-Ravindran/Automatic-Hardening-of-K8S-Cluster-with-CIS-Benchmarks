@@ -668,9 +668,11 @@ judgment.
 ## OUTPUT
 
 Username and location of private key to access the node are given as the input:
+
 ![image3](./images/image3.png)
 
 Failed Benchmarks for Worker Node:
+
 ![image4](./images/image4.png)
 
 ### Example of Control 4.2.7 before remediation:
@@ -710,7 +712,7 @@ apiserver.yaml on the Control Plane node.
 
 ![image9](./images/image9.png)
 
-### fter Remediation:
+### After Remediation:
 
 ![image10](./images/image10.png)
 
